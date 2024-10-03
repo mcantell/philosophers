@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   one_philo.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/26 10:11:37 by mcantell          #+#    #+#             */
-/*   Updated: 2024/09/27 15:16:15 by mcantell         ###   ########.fr       */
+/*   Created: 2024/09/27 14:13:39 by mcantell          #+#    #+#             */
+/*   Updated: 2024/09/27 15:35:57 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	main(int argc, char **argv)
+int	check_is_one(t_table *table)
 {
-	t_table	table;
-
-	if (check_args(argc, argv) == 1)
-		return (0);
-	if (!init_table(argv, &table))
+	if (table->philo_num == 1)
 	{
-		printf(ERR_INIT_TABLE);
-		return (0);
+		usleep(table->death_time * 1000);
+		table->philo_is_dead = true;
+		printf("%d %d died\n", table->death_time, table->philo_num);
+		return (1);
 	}
-	if (check_is_one(&table))
-		return (0);
+	return (0);
 }

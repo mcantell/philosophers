@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:09:12 by mcantell          #+#    #+#             */
-/*   Updated: 2024/09/26 15:20:01 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:07:52 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,5 +18,5 @@
 # define ERR_POSITIVE "ERROR. The number is negative or too big.\n"
 # define ERR_NUM_IMPUT "ERROR. The input can't be zero.\n"
 # define ERR_NUM_PHILO "ERROR. Too much philosophers. Try under 200. \n"
-
+# define ERR_INIT_TABLE "ERROR. Error init table\n"
 #endif

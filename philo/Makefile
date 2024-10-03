@@ -3,12 +3,12 @@ NAME 		= philo
 PHILO_DIR 	= ./srcs
 PHILO_INC 	=  ./include
 
-SRCS		=	main.c main_utils.c check_arguments.c check_arguments_1.c\
+SRCS		=	main.c main_utils.c check_arguments.c check_arguments_1.c one_philo.c table.c\
 
 OBJ 		= $(patsubst %.c, $(PHILO_DIR)/%.o, $(SRCS))
 
 CC			= gcc
-CFLAGS		= -Wall -Werror -Wextra
+CFLAGS		= -Wall -Werror -Wextra -g
 RM 			= rm -f
 
 INC 		= -I$(PHILO_INC)

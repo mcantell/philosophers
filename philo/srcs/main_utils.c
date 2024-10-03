@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:38:07 by mcantell          #+#    #+#             */
-/*   Updated: 2024/09/26 12:50:46 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/09/27 15:18:28 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,14 @@ long	ft_atol(char *str)
 		i++;
 	}
 	return (num * sign);
+}
+
+long long	get_time(void)
+{
+	long long		time;
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	time = (long long)tv.tv_sec * 1000LL + (long long)tv.tv_usec / 1000;
+	return (time);
 }

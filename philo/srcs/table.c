@@ -1,28 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   table.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/26 10:11:37 by mcantell          #+#    #+#             */
-/*   Updated: 2024/09/27 15:16:15 by mcantell         ###   ########.fr       */
+/*   Created: 2024/09/26 17:52:51 by mcantell          #+#    #+#             */
+/*   Updated: 2024/09/27 15:31:10 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	main(int argc, char **argv)
+int	init_table(char **argv, t_table *table)
 {
-	t_table	table;
-
-	if (check_args(argc, argv) == 1)
-		return (0);
-	if (!init_table(argv, &table))
-	{
-		printf(ERR_INIT_TABLE);
-		return (0);
-	}
-	if (check_is_one(&table))
-		return (0);
+	table->philo_index = 0;
+	table->philo_num = ft_atol(argv[1]);
+	table->death_time = ft_atol(argv[2]);
+	table->dinner_end = 0;
+	if (argv[5])
+		table->meal_num = ft_atol(argv[5]);
+	return (1);
 }
