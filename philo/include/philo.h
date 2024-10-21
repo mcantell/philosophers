@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:09:15 by mcantell          #+#    #+#             */
-/*   Updated: 2024/09/27 15:31:00 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:04:25 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,35 @@ typedef enum e_bool
 	true = 1,
 }	t_bool;
 
-typedef struct e_table
+typedef struct s_philo
 {
-	long long	dinner_end;
-	t_bool		philo_is_dead;
-	int			philo_num;
-	int			philo_index;
-	int			meal_num;
-	int			death_time;
+	int				time_death;
+	int				index_philo;
+	int				time_dinner;
+	int				time_sleep;
+	int				index_meal;
+	t_bool			sleeping;
+	t_bool			eating;
+	t_bool			thinking;
+	t_bool			is_dead;
+	pthread_mutex_t	fork;
+	struct s_philo *next;
+	struct s_philo *prev;
+}	t_philo;
 
+typedef struct s_table
+{
+	long long		dinner_end;
+	long long		dinner_start;
+	t_bool			philo_is_dead;
+	int				philo_num;
+	int				philo_index;
+	int				meal_num;
+	int				death_time;
+	pthread_mutex_t	writing;
+	pthread_mutex_t sitting;
+	pthread_mutex_t	eating;
+	t_philo			*philo;
 }	t_table;
 
 /* check_arguments utils */
@@ -49,10 +69,15 @@ int			check_philo_num(char *str);
 int			check_args(int argc, char **argv);
 /* init table */
 int			init_table(char **argv, t_table *table);
+/* init philo list */
+int			create_new_philo(t_philo **philo, char **av);
+int			init_philo(t_philo *philo, char **argv, int i);
 /* check if is one philo */
-int			check_is_one(t_table *table);
+int			one_philo(t_table *table, t_philo *philo);
 /* main utils*/
 long		ft_atol(char *str);
 long long	get_time(void);
-
+/* routine */
+int			routine(t_table *table, pthread_t *thread);
+void		*start_routine(void *);
 #endif

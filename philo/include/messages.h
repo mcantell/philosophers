@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:09:12 by mcantell          #+#    #+#             */
-/*   Updated: 2024/09/27 15:07:52 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:12:18 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,6 @@
 # define ERR_NUM_IMPUT "ERROR. The input can't be zero.\n"
 # define ERR_NUM_PHILO "ERROR. Too much philosophers. Try under 200. \n"
 # define ERR_INIT_TABLE "ERROR. Error init table\n"
+# define ERR_INIT_THREAD "ERROR. Error init thread\n"
+# define ERR_CREATE_PHILO "ERROR. Errro create philosopher\n"
 #endif
