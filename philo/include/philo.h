@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:09:15 by mcantell          #+#    #+#             */
-/*   Updated: 2024/10/21 16:04:25 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/10/24 11:43:02 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,11 @@ int			one_philo(t_table *table, t_philo *philo);
 long		ft_atol(char *str);
 long long	get_time(void);
 /* routine */
+void		multiple_philo(t_table *table, t_philo *philo);
 int			routine(t_table *table, pthread_t *thread);
 void		*start_routine(void *);
+/* azioni dei filosofi */
+void		thinking(t_table *table, t_philo *philo);
+void		sleeping(t_table *table, t_philo *philo);
+void		eating(t_table *table, t_philo *philo);
 #endif

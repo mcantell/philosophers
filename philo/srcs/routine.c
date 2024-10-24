@@ -6,11 +6,27 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:56:03 by mcantell          #+#    #+#             */
-/*   Updated: 2024/10/21 16:35:10 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:28:10 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include "../include/philo.h"
+
+/* Qui creo la funzione che mi andra' a impostare il tutto per piu' filosofi*/
+void	multiple_philo(t_table *table, t_philo *philo)
+{
+	while (1)
+	{
+		if (table->dinner_end)
+			break ;
+		if (philo->eating)
+			eating(table, philo);
+		if (philo->sleeping)
+			sleeping(table, philo);
+		if (philo->thinking)
+			thinking(table, philo);
+	}
+}
 
 /* Qui vado a startare la routine che seguiranno i vari filosofi */
 void	*start_routine(void *arg)
@@ -34,7 +50,7 @@ void	*start_routine(void *arg)
 	pthread_mutex_unlock(&table->sitting);
 	if (one_philo(table, philo))
 		return (NULL);
-	//multiple_philo(table, philo);
+	multiple_philo(table, philo);
 	return (NULL);
 }
 
