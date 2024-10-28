@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:09:15 by mcantell          #+#    #+#             */
-/*   Updated: 2024/10/28 15:46:49 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:41:56 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ typedef struct s_philo
 	int				index_philo;
 	int				time_dinner;
 	int				time_sleep;
-	int				last_meal;
+	long long		last_meal;
 	int				index_meal;
 	t_bool			sleeping;
 	t_bool			eating;
@@ -78,6 +78,8 @@ int			one_philo(t_table *table, t_philo *philo);
 /* main utils*/
 long		ft_atol(char *str);
 long long	get_time(void);
+void		destroy_mutex(t_table *table, t_philo *philo);
+void		free_list(t_philo **philo);
 /* routine */
 void		multiple_philo(t_table *table, t_philo *philo);
 int			routine(t_table *table, pthread_t *thread);

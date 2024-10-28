@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:56:03 by mcantell          #+#    #+#             */
-/*   Updated: 2024/10/24 14:08:55 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/10/28 16:54:52 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	multiple_philo(t_table *table, t_philo *philo)
 			sleeping(table, philo);
 		if (philo->thinking)
 			thinking(table, philo);
+		if (table->philo_is_dead)
+			break ;
 	}
 }
 
@@ -51,6 +53,7 @@ void	*start_routine(void *arg)
 	if (one_philo(table, philo))
 		return (NULL);
 	multiple_philo(table, philo);
+
 	return (NULL);
 }
 
@@ -75,5 +78,8 @@ int	routine(t_table *table, pthread_t *thread)
 		pthread_join(thread[i], NULL);
 		i++;
 	}
+	if (table->philo_is_dead)
+		destroy_mutex(table, table->philo);
+	free_list(&table->philo);
 	return (1);
 }
