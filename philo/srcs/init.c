@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:52:51 by mcantell          #+#    #+#             */
-/*   Updated: 2024/10/24 13:14:12 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/10/28 15:49:55 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	init_philo(t_philo *philo, char **argv, int i)
 	philo->time_death = ft_atol(argv[2]);
 	philo->time_dinner = ft_atol(argv[3]);
 	philo->time_sleep = ft_atol(argv[4]);
+	philo->last_meal = 0;
 	philo->index_meal = 0;
 	philo->is_dead = false;
 	philo->eating = false;

@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 10:48:37 by mcantell          #+#    #+#             */
-/*   Updated: 2024/10/24 14:20:04 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/10/28 15:58:54 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	sleeping(t_table *table, t_philo *philo)
 /* Adesso faccio la funzione per il mangiare */
 void	eating(t_table *table, t_philo *philo)
 {
+	before_eating(table, philo);
 	eating_utils(table, philo);
 	philo->index_meal++;
 	if (philo->index_meal == table->meal_num
@@ -63,6 +64,7 @@ void	eating(t_table *table, t_philo *philo)
 	if (table->philo_num % 2 != 0)
 		philo->thinking = true;
 	philo->eating = false;
+	philo->last_meal = get_time();
 }
 static void	eating_utils(t_table *table, t_philo *philo)
 {
@@ -86,4 +88,19 @@ static void	eating_utils(t_table *table, t_philo *philo)
 	usleep(philo->time_dinner * 1000);
 	pthread_mutex_unlock(&philo->fork);
 	pthread_mutex_unlock(&philo->next->fork);
+}
+
+/* per adesso mi calcolo un tempo di morte solo maggiore ma non uguale*/
+void	before_eating(t_table *table, t_philo *philo)
+{
+	int			index;
+
+	index = philo->index_philo;
+	if (table->dinner_start - philo->last_meal > philo->time_death)
+	{
+		table->philo_is_dead = true;
+		philo->is_dead = true;
+		pthread_mutex_lock(&table->writing);
+		printf("%d ")
+	}
 }

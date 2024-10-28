@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:09:15 by mcantell          #+#    #+#             */
-/*   Updated: 2024/10/24 11:43:02 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/10/28 15:46:49 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_philo
 	int				index_philo;
 	int				time_dinner;
 	int				time_sleep;
+	int				last_meal;
 	int				index_meal;
 	t_bool			sleeping;
 	t_bool			eating;
