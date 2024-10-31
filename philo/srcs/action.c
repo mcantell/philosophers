@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 10:48:37 by mcantell          #+#    #+#             */
-/*   Updated: 2024/10/28 17:04:45 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/10/31 17:54:27 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ void	thinking(t_table *table, t_philo *philo)
 	long long	current_time;
 	int			index;
 
-	if (before_eating(table, philo))
-		return ;
 	if (table->dinner_end)
 		return ;
 	index = philo->index_philo;
@@ -43,8 +41,6 @@ void	sleeping(t_table *table, t_philo *philo)
 	long long	current_time;
 	int			index;
 
-	if (before_eating(table, philo))
-		return ;
 	if (table->dinner_end)
 		return ;
 	index = philo->index_philo;
@@ -62,8 +58,6 @@ void	sleeping(t_table *table, t_philo *philo)
 void	eating(t_table *table, t_philo *philo)
 {
 	philo->last_meal = get_time();
-	if (before_eating(table, philo))
-		return ;
 	eating_utils(table, philo);
 	philo->index_meal++;
 	if (philo->index_meal == table->meal_num
@@ -83,14 +77,19 @@ static void	eating_utils(t_table *table, t_philo *philo)
 	pthread_mutex_lock(&philo->fork);
 	pthread_mutex_lock(&philo->next->fork);
 	current_time = get_time();
-	pthread_mutex_lock(&table->writing);
+	if (before_eating(table, philo))
+	{
+		pthread_mutex_unlock(&philo->fork);
+		pthread_mutex_unlock(&philo->next->fork);
+		return ;
+	}
 	if (table->dinner_end)
 	{
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(&philo->next->fork);
-		pthread_mutex_unlock(&table->writing);
 		return ;
 	}
+	pthread_mutex_lock(&table->writing);
 	printf("%lld %d is eating\n", current_time - table->dinner_start, index);
 	pthread_mutex_unlock(&table->writing);
 	usleep(philo->time_dinner * 1000);
@@ -98,23 +97,26 @@ static void	eating_utils(t_table *table, t_philo *philo)
 	pthread_mutex_unlock(&philo->next->fork);
 }
 
-/* per adesso mi calcolo un tempo di morte solo maggiore ma non uguale*/
+/* per adesso mi calcolo un tempo di morte solo maggiore ma non uguale */
 static int	before_eating(t_table *table, t_philo *philo)
 {
-	int			index;
-	long long	current_time;
+	int				index;
+	long long int	current_time;
 
 	index = philo->index_philo;
-	current_time = get_time();
-	if (table->dinner_start - philo->last_meal > philo->time_death)
+	if (philo->index_meal == 0 && (index % 2 == 0 || index == table->philo_num))
 	{
-		table->philo_is_dead = true;
-		philo->is_dead = true;
-		table->dinner_end = true;
-		pthread_mutex_lock(&table->writing);
-		printf("%lld %d is dead\n", current_time - table->dinner_start, index);
-		pthread_mutex_unlock(&table->writing);
-		return (1);
+		current_time = get_time();
+		if (current_time - table->dinner_start >= philo->time_death)
+		{
+			table->philo_is_dead = true;
+			philo->is_dead = true;
+			table->dinner_end = true;
+			pthread_mutex_lock(&table->writing);
+			printf("%lld %d is dead\n", current_time - table->dinner_start, index);
+			pthread_mutex_unlock(&table->writing);
+			return (1);
+		}
 	}
 	return (0);
 }
