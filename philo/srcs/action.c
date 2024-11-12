@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 10:48:37 by mcantell          #+#    #+#             */
-/*   Updated: 2024/10/31 17:54:27 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:52:22 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	thinking(t_table *table, t_philo *philo)
 	long long	current_time;
 	int			index;
 
-	if (table->dinner_end)
+	if (table->dinner_is_end)
 		return ;
 	index = philo->index_philo;
 	current_time = get_time();
@@ -41,7 +41,7 @@ void	sleeping(t_table *table, t_philo *philo)
 	long long	current_time;
 	int			index;
 
-	if (table->dinner_end)
+	if (table->dinner_is_end)
 		return ;
 	index = philo->index_philo;
 	current_time = get_time();
@@ -57,12 +57,12 @@ void	sleeping(t_table *table, t_philo *philo)
 /* Adesso faccio la funzione per il mangiare */
 void	eating(t_table *table, t_philo *philo)
 {
-	philo->last_meal = get_time();
 	eating_utils(table, philo);
+	philo->last_meal = get_time();
 	philo->index_meal++;
-	if (philo->index_meal == table->meal_num
+	if (table->meal_num != -1 && philo->index_meal == table->meal_num
 		&& philo->index_philo == table->philo_num)
-		table->dinner_end = true;
+		table->dinner_is_end = true;
 	philo->sleeping = true;
 	if (table->philo_num % 2 != 0)
 		philo->thinking = true;
@@ -83,7 +83,7 @@ static void	eating_utils(t_table *table, t_philo *philo)
 		pthread_mutex_unlock(&philo->next->fork);
 		return ;
 	}
-	if (table->dinner_end)
+	if (table->dinner_is_end)
 	{
 		pthread_mutex_unlock(&philo->fork);
 		pthread_mutex_unlock(&philo->next->fork);
@@ -111,7 +111,7 @@ static int	before_eating(t_table *table, t_philo *philo)
 		{
 			table->philo_is_dead = true;
 			philo->is_dead = true;
-			table->dinner_end = true;
+			table->dinner_is_end = true;
 			pthread_mutex_lock(&table->writing);
 			printf("%lld %d is dead\n", current_time - table->dinner_start, index);
 			pthread_mutex_unlock(&table->writing);

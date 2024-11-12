@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:09:15 by mcantell          #+#    #+#             */
-/*   Updated: 2024/10/28 16:41:56 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:47:06 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_table
 	long long		dinner_end;
 	long long		dinner_start;
 	t_bool			philo_is_dead;
+	t_bool			dinner_is_end;
 	int				philo_num;
 	int				philo_index;
 	int				meal_num;
@@ -78,14 +79,19 @@ int			one_philo(t_table *table, t_philo *philo);
 /* main utils*/
 long		ft_atol(char *str);
 long long	get_time(void);
-void		destroy_mutex(t_table *table, t_philo *philo);
+void		destroy_mutex(t_table *table);
 void		free_list(t_philo **philo);
 /* routine */
 void		multiple_philo(t_table *table, t_philo *philo);
 int			routine(t_table *table, pthread_t *thread);
 void		*start_routine(void *);
-/* azioni dei filosofi */
+/* action */
 void		thinking(t_table *table, t_philo *philo);
 void		sleeping(t_table *table, t_philo *philo);
 void		eating(t_table *table, t_philo *philo);
+/* observer */
+void		*observer_routine(void *arg);
+void		observer_check(t_table *table);
+void		death_check(t_table *table);
+void		meal_check(t_table *table);
 #endif

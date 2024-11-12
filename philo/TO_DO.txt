@@ -1,15 +1,12 @@
 Lista delle cose da fare per philosopher
 
--Studiare bene come funzionano i mutex;
+-l'observer
 
--studiare come funzionano i thread;
-
--Integrare le conoscenze per far funzionare il progetto.
-
--Fare la parte con piu' filosofi;
 
 Cose fatte:
 
 -Fatto il check degli argomenti;
 
 -Fatto con un filosofo con i thread;
+
+-Fatta la parte con piu' filosofi;

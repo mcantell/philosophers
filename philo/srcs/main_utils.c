@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:38:07 by mcantell          #+#    #+#             */
-/*   Updated: 2024/10/28 16:24:00 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:56:39 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,11 @@ long long	get_time(void)
 	return (time);
 }
 
-void	destroy_mutex(t_table *table, t_philo *philo)
+void	destroy_mutex(t_table *table)
 {
 	pthread_mutex_destroy(&table->writing);
 	pthread_mutex_destroy(&table->eating);
 	pthread_mutex_destroy(&table->sitting);
-	pthread_mutex_destroy(&philo->fork);
 }
 
 void	free_list(t_philo **philo)
@@ -66,9 +65,10 @@ void	free_list(t_philo **philo)
 	while (1)
 	{
 		next = current->next;
+		pthread_mutex_destroy(&current->fork);
 		free (current);
 		if (next == *philo)
 			return ;
-		current = current->next;
+		current = next;
 	}
 }

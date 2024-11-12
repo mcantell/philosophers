@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:52:51 by mcantell          #+#    #+#             */
-/*   Updated: 2024/10/28 16:53:02 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:51:54 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ int	init_table(char **argv, t_table *table)
 	table->death_time = ft_atol(argv[2]);
 	table->dinner_end = 0;
 	table->dinner_start = 0;
+	table->meal_num = -1;
 	table->philo = NULL;
+	table->philo_is_dead = false;
+	table->dinner_is_end = false;
 	if (pthread_mutex_init(&table->sitting, NULL)
 		|| pthread_mutex_init(&table->eating, NULL)
 		|| pthread_mutex_init(&table->writing, NULL))

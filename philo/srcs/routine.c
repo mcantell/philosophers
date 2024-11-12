@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:56:03 by mcantell          #+#    #+#             */
-/*   Updated: 2024/10/28 16:54:52 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:53:29 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	multiple_philo(t_table *table, t_philo *philo)
 {
 	while (1)
 	{
-		if (table->dinner_end)
+		if (table->dinner_is_end)
 			break ;
 		if (philo->eating)
 			eating(table, philo);
@@ -63,23 +63,26 @@ int	routine(t_table *table, pthread_t *thread)
 	int	i;
 
 	i = 0;
+	if (pthread_create(&thread[table->philo_num], NULL,
+		observer_routine, (void *)table))
+	{
+		printf(ERR_OBSERVER_CREATE);
+		return (0);
+	}
+	usleep(100);
 	while (i < table->philo_num)
 	{
-		if (pthread_create(&thread[i], NULL, start_routine, (void *)table))
+		if (pthread_create(&thread[i++], NULL, start_routine, (void *)table))
 		{
 			printf(ERR_CREATE_PHILO);
 			return (0);
 		}
-		i++;
 	}
 	i = 0;
 	while (i <= table->philo_num)
-	{
-		pthread_join(thread[i], NULL);
-		i++;
-	}
+		pthread_join(thread[i++], NULL);
 	if (table->philo_is_dead)
-		destroy_mutex(table, table->philo);
+		destroy_mutex(table);
 	free_list(&table->philo);
 	return (1);
 }

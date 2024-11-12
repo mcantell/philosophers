@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 14:13:39 by mcantell          #+#    #+#             */
-/*   Updated: 2024/10/21 16:29:35 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/11/12 16:01:56 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	one_philo(t_table *table, t_philo *philo)
 		pthread_mutex_lock(&table->writing);
 		printf("0 1 has taken fork\n");
 		usleep(table->death_time * 1000);
-		table->dinner_end = true;
+		table->dinner_is_end = true;
 		philo->is_dead = true;
 		printf("%d %d died\n", table->death_time, table->philo_num);
 		pthread_mutex_unlock(&table->writing);
