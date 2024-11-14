@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 10:09:15 by mcantell          #+#    #+#             */
-/*   Updated: 2024/11/12 16:47:06 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:46:04 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ typedef struct s_philo
 	t_bool			thinking;
 	t_bool			is_dead;
 	pthread_mutex_t	fork;
-	struct s_philo *next;
-	struct s_philo *prev;
+	struct s_philo	*next;
+	struct s_philo	*prev;
 }	t_philo;
 
 typedef struct s_table
@@ -56,7 +56,7 @@ typedef struct s_table
 	int				meal_num;
 	int				death_time;
 	pthread_mutex_t	writing;
-	pthread_mutex_t sitting;
+	pthread_mutex_t	sitting;
 	pthread_mutex_t	eating;
 	t_philo			*philo;
 }	t_table;
@@ -84,7 +84,7 @@ void		free_list(t_philo **philo);
 /* routine */
 void		multiple_philo(t_table *table, t_philo *philo);
 int			routine(t_table *table, pthread_t *thread);
-void		*start_routine(void *);
+void		*start_routine(void *arg);
 /* action */
 void		thinking(t_table *table, t_philo *philo);
 void		sleeping(t_table *table, t_philo *philo);

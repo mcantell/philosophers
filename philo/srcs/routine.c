@@ -6,13 +6,12 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:56:03 by mcantell          #+#    #+#             */
-/*   Updated: 2024/11/12 16:53:29 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:49:11 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-/* Qui creo la funzione che mi andra' a impostare il tutto per piu' filosofi*/
 void	multiple_philo(t_table *table, t_philo *philo)
 {
 	while (1)
@@ -30,13 +29,12 @@ void	multiple_philo(t_table *table, t_philo *philo)
 	}
 }
 
-/* Qui vado a startare la routine che seguiranno i vari filosofi */
 void	*start_routine(void *arg)
 {
 	t_table	*table;
 	t_philo	*philo;
 
-	table = (t_table*)arg;
+	table = (t_table *)arg;
 	if (!table)
 		return (NULL);
 	philo = table->philo;
@@ -53,18 +51,16 @@ void	*start_routine(void *arg)
 	if (one_philo(table, philo))
 		return (NULL);
 	multiple_philo(table, philo);
-
 	return (NULL);
 }
 
-/* Qui io creo i thread e nella funzione gli passo la routine che faranno */
 int	routine(t_table *table, pthread_t *thread)
 {
 	int	i;
 
 	i = 0;
 	if (pthread_create(&thread[table->philo_num], NULL,
-		observer_routine, (void *)table))
+			observer_routine, (void *)table))
 	{
 		printf(ERR_OBSERVER_CREATE);
 		return (0);

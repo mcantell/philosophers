@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/12 13:32:04 by mcantell          #+#    #+#             */
-/*   Updated: 2024/11/12 16:46:47 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/11/14 13:46:46 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ void	death_check(t_table *table)
 	while (1)
 	{
 		current_time = get_time();
-		if (philo->last_meal &&
-			(current_time - philo->last_meal >= philo->time_death))
+		if (philo->last_meal
+			&& (current_time - philo->last_meal >= philo->time_death))
 		{
 			pthread_mutex_lock(&table->writing);
-			printf("%lld %d is dead\n", current_time - philo->last_meal, philo->index_philo);
+			printf("%lld %d is dead\n",
+				current_time - philo->last_meal, philo->index_philo);
 			pthread_mutex_unlock(&table->writing);
 			table->dinner_is_end = true;
 			return ;
@@ -76,9 +77,9 @@ void	observer_check(t_table *table)
 
 void	*observer_routine(void *arg)
 {
-	t_table *table;
+	t_table	*table;
 
-	table = (t_table*)arg;
+	table = (t_table *)arg;
 	if (table->philo_num > 1)
 		observer_check(table);
 	return (NULL);
