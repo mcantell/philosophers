@@ -6,12 +6,16 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 17:52:51 by mcantell          #+#    #+#             */
-/*   Updated: 2024/11/14 13:48:55 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:04:47 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
+/* inizializzo sia il tavolo sia la lista dei filosofi
+** quando vado a creare la lista di filosofi vado a dare
+** come riferimento il puntatore alla testa della lista
+*/
 int	init_table(char **argv, t_table *table)
 {
 	table->philo_index = 0;
@@ -51,6 +55,16 @@ int	init_philo(t_philo *philo, char **argv, int i)
 	return (1);
 }
 
+/* creo una lista circolare
+** nell'if metto il caso in cui non esista nessun elemento della lista
+** essendo che la voglio fare circolare metto un elemento che punta a se stesso
+** sia come precedente sia come successivo
+** nell'else creo appunto il resto della lista mantenenedola circolare
+** all'inizio gli dico che al successivo di new gli do la test
+** a quello precedente gli do l'ultimo della lista
+** all'ultimo prima della testa aggiungo il nuovo nodo
+** infine gli dico che il precedente alla testa e il nodo appena aggiunto
+*/
 int	create_new_philo(t_philo **philo, char **av)
 {
 	int		i;
