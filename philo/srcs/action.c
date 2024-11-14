@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 10:48:37 by mcantell          #+#    #+#             */
-/*   Updated: 2024/11/14 14:02:10 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/11/14 14:03:06 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	eating_utils(t_table *table, t_philo *philo);
 static int	before_eating(t_table *table, t_philo *philo);
 
+/* Abbiamo la funzione di quando il filosofo pensa */
 void	thinking(t_table *table, t_philo *philo)
 {
 	long long	current_time;
@@ -33,6 +34,7 @@ void	thinking(t_table *table, t_philo *philo)
 	philo->eating = true;
 }
 
+/* Qua faccio la funzione per dormire */
 void	sleeping(t_table *table, t_philo *philo)
 {
 	long long	current_time;
@@ -94,6 +96,7 @@ static void	eating_utils(t_table *table, t_philo *philo)
 	pthread_mutex_unlock(&philo->next->fork);
 }
 
+/* per adesso mi calcolo un tempo di morte solo maggiore ma non uguale */
 static int	before_eating(t_table *table, t_philo *philo)
 {
 	int				index;
