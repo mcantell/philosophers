@@ -6,7 +6,7 @@
 /*   By: mcantell <mcantell@student.42roma.it>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 10:48:37 by mcantell          #+#    #+#             */
-/*   Updated: 2024/11/14 14:03:06 by mcantell         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:07:28 by mcantell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,18 @@ void	eating(t_table *table, t_philo *philo)
 {
 	pthread_mutex_lock(&philo->fork);
 	pthread_mutex_lock(&philo->next->fork);
+	if (before_eating(table, philo))
+	{
+		pthread_mutex_unlock(&philo->fork);
+		pthread_mutex_unlock(&philo->next->fork);
+		return ;
+	}
+	if (table->dinner_is_end)
+	{
+		pthread_mutex_unlock(&philo->fork);
+		pthread_mutex_unlock(&philo->next->fork);
+		return ;
+	}
 	eating_utils(table, philo);
 	philo->index_meal++;
 	if (table->meal_num != -1 && philo->index_meal == table->meal_num
@@ -73,20 +85,13 @@ static void	eating_utils(t_table *table, t_philo *philo)
 	long long	current_time;
 	int			index;
 
-	index = philo->index_philo;
 	current_time = get_time();
-	if (before_eating(table, philo))
-	{
-		pthread_mutex_unlock(&philo->fork);
-		pthread_mutex_unlock(&philo->next->fork);
-		return ;
-	}
-	if (table->dinner_is_end)
-	{
-		pthread_mutex_unlock(&philo->fork);
-		pthread_mutex_unlock(&philo->next->fork);
-		return ;
-	}
+	pthread_mutex_lock(&table->writing);
+	printf("%lld %d has taken a fork\n%lld %d has taken a fork\n",
+		current_time - table->dinner_start, philo->index_philo,
+		current_time - table->dinner_start, philo->index_philo);
+	pthread_mutex_unlock(&table->writing);
+	index = philo->index_philo;
 	pthread_mutex_lock(&table->writing);
 	printf("%lld %d is eating\n", current_time - table->dinner_start, index);
 	pthread_mutex_unlock(&table->writing);
